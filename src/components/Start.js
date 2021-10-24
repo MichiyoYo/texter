@@ -5,7 +5,8 @@ import bgImage from "../assets/images/bkg-img.png";
 
 class Start extends Component {
   state = {
-    text: "",
+    name: "",
+    bgColor: "",
   };
   render() {
     return (
@@ -19,8 +20,8 @@ class Start extends Component {
           <View style={styles.box}>
             <TextInput
               style={styles.input}
-              onChangeText={(text) => this.setState({ text: text })}
-              value={this.state.text}
+              onChangeText={(text) => this.setState({ name: text })}
+              value={this.state.name}
               placeholder="Your Name"
             />
             <View style={styles.colorSwatch}>
@@ -39,7 +40,7 @@ class Start extends Component {
               containerViewStyle={{ width: "100%", marginLeft: 0 }}
               onPress={() =>
                 this.props.navigation.navigate("Chat", {
-                  username: this.state.text,
+                  username: this.state.name,
                 })
               }
             />
@@ -53,6 +54,7 @@ class Start extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    flexDirection: "column",
     backgroundColor: "#151617",
     alignItems: "center",
     justifyContent: "space-between",
@@ -64,28 +66,31 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   h1: {
-    flex: 1,
+    flexGrow: 15,
+    flexShrink: 10,
     fontSize: 45,
     fontWeight: "800",
     color: "#fff",
-    paddingTop: 100,
+    paddingTop: 60,
   },
   box: {
     backgroundColor: "white",
-    flex: 0.5,
+    flexGrow: 1,
+    flexShrink: 0,
     width: "88%",
     marginBottom: 30,
     flexDirection: "column",
     justifyContent: "space-evenly",
     alignItems: "center",
     padding: 30,
+    height: 260,
+    minHeight: 260,
   },
   input: {
     height: 40,
     borderColor: "gray",
     borderWidth: 1,
     width: "88%",
-    marginBottom: 20,
     padding: 5,
     fontSize: 16,
     fontWeight: "300",

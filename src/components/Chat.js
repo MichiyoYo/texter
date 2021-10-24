@@ -3,9 +3,11 @@ import { StyleSheet, Text, View } from "react-native";
 
 class Chat extends Component {
   render() {
+    let { name } = this.props.route.params;
+    this.props.navigation.setOptions({ title: name });
     return (
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <Text>Hello Screen2!</Text>
+        <Text>Chat screen</Text>
       </View>
     );
   }
