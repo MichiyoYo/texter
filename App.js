@@ -11,10 +11,6 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 
 export default class App extends React.Component {
-  updateUsername = (newName) => {
-    this.setState({ username: newName });
-  };
-
   render() {
     const Stack = createStackNavigator();
     return (

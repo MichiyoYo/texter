@@ -5,6 +5,7 @@ class Chat extends Component {
   render() {
     let { name, bgColor } = this.props.route.params;
     this.props.navigation.setOptions({ title: name });
+
     return (
       <View
         style={{
@@ -14,7 +15,7 @@ class Chat extends Component {
           backgroundColor: bgColor,
         }}
       >
-        <Text>Chat screen</Text>
+        <Text>{name}</Text>
       </View>
     );
   }

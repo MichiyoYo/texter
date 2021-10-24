@@ -16,7 +16,7 @@ class Start extends Component {
   colors = {
     black: "#090C08",
     gray: "#474056",
-    lightBlue: "#8A95A5;",
+    lightBlue: "#8A95A5",
     lightGreen: "#B9C6AE",
   };
 
@@ -44,9 +44,21 @@ class Start extends Component {
                 >
                   <View style={styles.swatch1}></View>
                 </TouchableOpacity>
-                <View style={styles.swatch2}></View>
-                <View style={styles.swatch3}></View>
-                <View style={styles.swatch4}></View>
+                <TouchableOpacity
+                  onPress={() => this.changeBgColor(this.colors.gray)}
+                >
+                  <View style={styles.swatch2}></View>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => this.changeBgColor(this.colors.lightBlue)}
+                >
+                  <View style={styles.swatch3}></View>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => this.changeBgColor(this.colors.lightGreen)}
+                >
+                  <View style={styles.swatch4}></View>
+                </TouchableOpacity>
               </View>
             </View>
             <Button
@@ -56,7 +68,7 @@ class Start extends Component {
               containerViewStyle={{ width: "100%", marginLeft: 0 }}
               onPress={() =>
                 this.props.navigation.navigate("Chat", {
-                  username: this.state.name,
+                  name: this.state.name,
                   bgColor: this.state.bgColor,
                 })
               }
@@ -68,6 +80,7 @@ class Start extends Component {
   }
 }
 
+// Styles for Start view
 const styles = StyleSheet.create({
   container: {
     flex: 1,
