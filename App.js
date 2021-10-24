@@ -1,6 +1,4 @@
-import { StatusBar } from "expo-status-bar";
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
 //importing the screens
 import Start from "./src/components/Start";
 import Chat from "./src/components/Chat";
@@ -10,6 +8,10 @@ import "react-native-gesture-handler";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 
+/**
+ * Main component that holds the navigation container to
+ * switch from one screen to the other
+ */
 export default class App extends React.Component {
   render() {
     const Stack = createStackNavigator();

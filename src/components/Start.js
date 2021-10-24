@@ -3,16 +3,27 @@ import { ImageBackground, StyleSheet, Text, View, Button } from "react-native";
 import { TextInput, TouchableOpacity } from "react-native-gesture-handler";
 import bgImage from "../assets/images/bkg-img.png";
 
+/**
+ * Start is the component that gets renderd as a splash screen
+ * from where the user can type a name and pick a background color
+ * to use during the chat experience
+ */
 class Start extends Component {
+  // The state of the current component
   state = {
     name: "",
     bgColor: "",
   };
 
+  /**
+   * Updates the state with the background color picked from the swatch
+   * @param {*} newColor the new color used to update the state
+   */
   changeBgColor = (newColor) => {
     this.setState({ bgColor: newColor });
   };
 
+  // The colors for the swatch
   colors = {
     black: "#090C08",
     gray: "#474056",
