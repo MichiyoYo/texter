@@ -2,10 +2,13 @@ import React, { Component } from "react";
 import { StyleSheet, Text, View } from "react-native";
 
 class Chat extends Component {
-  render() {
-    let { name, bgColor } = this.props.route.params;
+  componentDidMount() {
+    let { name } = this.props.route.params;
     this.props.navigation.setOptions({ title: name });
+  }
 
+  render() {
+    let { bgColor } = this.props.route.params;
     return (
       <View
         style={{
@@ -15,7 +18,7 @@ class Chat extends Component {
           backgroundColor: bgColor,
         }}
       >
-        <Text>{name}</Text>
+        <Text>Chat screen</Text>
       </View>
     );
   }
