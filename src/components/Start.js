@@ -1,8 +1,15 @@
 import React, { Component } from "react";
-import { ImageBackground, StyleSheet, Text, View, Button } from "react-native";
+import {
+  ImageBackground,
+  StyleSheet,
+  Text,
+  View,
+  Button,
+  Image,
+} from "react-native";
 import { TextInput, TouchableOpacity } from "react-native-gesture-handler";
-import bgImage from "../assets/images/bkg-img.png";
-
+import bgImage from "../assets/images/pure-bg.png";
+import logo from "../assets/images/texter-logo.png";
 /**
  * Start is the component that gets renderd as a splash screen
  * from where the user can type a name and pick a background color
@@ -25,10 +32,10 @@ class Start extends Component {
 
   // The colors for the swatch
   colors = {
-    black: "#090C08",
-    gray: "#474056",
-    lightBlue: "#8A95A5",
-    lightGreen: "#B9C6AE",
+    orange: "#f44336",
+    magenta: "#e91e63",
+    fucsia: "#9c27b0",
+    purple: "#673ab7",
   };
 
   render() {
@@ -39,7 +46,8 @@ class Start extends Component {
           resizeMode="cover"
           style={styles.bgImage}
         >
-          <Text style={styles.h1}>CHATTY</Text>
+          <Image style={styles.logo} source={logo} />
+          <Text style={styles.h1}>Texter</Text>
           <View style={styles.box}>
             <TextInput
               style={styles.input}
@@ -51,22 +59,22 @@ class Start extends Component {
               <Text style={styles.subtitle}>Choose Background Color</Text>
               <View style={styles.swatches}>
                 <TouchableOpacity
-                  onPress={() => this.changeBgColor(this.colors.black)}
+                  onPress={() => this.changeBgColor(this.colors.orange)}
                 >
                   <View style={styles.swatch1}></View>
                 </TouchableOpacity>
                 <TouchableOpacity
-                  onPress={() => this.changeBgColor(this.colors.gray)}
+                  onPress={() => this.changeBgColor(this.colors.magenta)}
                 >
                   <View style={styles.swatch2}></View>
                 </TouchableOpacity>
                 <TouchableOpacity
-                  onPress={() => this.changeBgColor(this.colors.lightBlue)}
+                  onPress={() => this.changeBgColor(this.colors.fucsia)}
                 >
                   <View style={styles.swatch3}></View>
                 </TouchableOpacity>
                 <TouchableOpacity
-                  onPress={() => this.changeBgColor(this.colors.lightGreen)}
+                  onPress={() => this.changeBgColor(this.colors.purple)}
                 >
                   <View style={styles.swatch4}></View>
                 </TouchableOpacity>
@@ -75,7 +83,7 @@ class Start extends Component {
             <Button
               style={styles.btn}
               title="Start Chatting"
-              color={"#757083"}
+              color={"#6705e9"}
               containerViewStyle={{ width: "100%", marginLeft: 0 }}
               onPress={() =>
                 this.props.navigation.navigate("Chat", {
@@ -106,16 +114,25 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     alignItems: "center",
   },
+  logo: {
+    width: "50%",
+    height: "auto",
+    backgroundColor: "purple",
+    flexGrow: 2,
+    flexShrink: 1,
+  },
   h1: {
-    flexGrow: 15,
-    flexShrink: 10,
+    flexGrow: 1,
+    flexShrink: 1,
     fontSize: 45,
     fontWeight: "800",
     color: "#fff",
     paddingTop: 60,
+    backgroundColor: "blue",
+    fontFamily: "RandomlyCuteDisplay-Regular",
   },
   box: {
-    backgroundColor: "white",
+    backgroundColor: "#ffffffc4",
     flexGrow: 1,
     flexShrink: 0,
     width: "88%",
@@ -126,6 +143,8 @@ const styles = StyleSheet.create({
     padding: 30,
     height: 260,
     minHeight: 260,
+    maxHeight: 290,
+    borderRadius: 20,
   },
   input: {
     flex: 1,
@@ -164,25 +183,25 @@ const styles = StyleSheet.create({
   swatch1: {
     width: 40,
     height: 40,
-    backgroundColor: "#090C08",
+    backgroundColor: "#f44336",
     borderRadius: 40,
   },
   swatch2: {
     width: 40,
     height: 40,
-    backgroundColor: "#474056",
+    backgroundColor: "#e91e63",
     borderRadius: 40,
   },
   swatch3: {
     width: 40,
     height: 40,
-    backgroundColor: "#8A95A5",
+    backgroundColor: "#9c27b0",
     borderRadius: 40,
   },
   swatch4: {
     width: 40,
     height: 40,
-    backgroundColor: "#B9C6AE",
+    backgroundColor: "#673ab7",
     borderRadius: 40,
   },
 });

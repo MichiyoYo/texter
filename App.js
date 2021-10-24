@@ -21,7 +21,7 @@ export default class App extends React.Component {
           <Stack.Screen
             name="Start"
             component={Start}
-            options={{ title: "Welcome to Chatty!" }}
+            options={{ title: "Welcome to Texter!" }}
           />
           <Stack.Screen name="Chat" component={Chat} />
         </Stack.Navigator>
