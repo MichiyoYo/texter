@@ -8,7 +8,7 @@ import {
   Image,
 } from "react-native";
 import { TextInput, TouchableOpacity } from "react-native-gesture-handler";
-import bgImage from "../assets/images/pure-bg.png";
+import bgImage from "../assets/images/texter-bg.png";
 import logo from "../assets/images/texter-logo.png";
 /**
  * Start is the component that gets renderd as a splash screen
@@ -46,7 +46,6 @@ class Start extends Component {
           resizeMode="cover"
           style={styles.bgImage}
         >
-          <Image style={styles.logo} source={logo} />
           <Text style={styles.h1}>Texter</Text>
           <View style={styles.box}>
             <TextInput
@@ -124,12 +123,9 @@ const styles = StyleSheet.create({
   h1: {
     flexGrow: 1,
     flexShrink: 1,
-    fontSize: 45,
     fontWeight: "800",
-    color: "#fff",
+    color: "transparent",
     paddingTop: 60,
-    backgroundColor: "blue",
-    fontFamily: "RandomlyCuteDisplay-Regular",
   },
   box: {
     backgroundColor: "#ffffffc4",
