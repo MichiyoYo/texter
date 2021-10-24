@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { ImageBackground, StyleSheet, Text, View, Button } from "react-native";
-import { TextInput } from "react-native-gesture-handler";
+import { TextInput, TouchableOpacity } from "react-native-gesture-handler";
 import bgImage from "../assets/images/bkg-img.png";
 
 class Start extends Component {
@@ -8,6 +8,18 @@ class Start extends Component {
     name: "",
     bgColor: "",
   };
+
+  changeBgColor = (newColor) => {
+    this.setState({ bgColor: newColor });
+  };
+
+  colors = {
+    black: "#090C08",
+    gray: "#474056",
+    lightBlue: "#8A95A5;",
+    lightGreen: "#B9C6AE",
+  };
+
   render() {
     return (
       <View style={styles.container}>
@@ -27,7 +39,11 @@ class Start extends Component {
             <View style={styles.colorSwatch}>
               <Text style={styles.subtitle}>Choose Background Color</Text>
               <View style={styles.swatches}>
-                <View style={styles.swatch1}></View>
+                <TouchableOpacity
+                  onPress={() => this.changeBgColor(this.colors.black)}
+                >
+                  <View style={styles.swatch1}></View>
+                </TouchableOpacity>
                 <View style={styles.swatch2}></View>
                 <View style={styles.swatch3}></View>
                 <View style={styles.swatch4}></View>
@@ -41,6 +57,7 @@ class Start extends Component {
               onPress={() =>
                 this.props.navigation.navigate("Chat", {
                   username: this.state.name,
+                  bgColor: this.state.bgColor,
                 })
               }
             />
@@ -87,18 +104,21 @@ const styles = StyleSheet.create({
     minHeight: 260,
   },
   input: {
-    height: 40,
+    flex: 1,
+    height: 50,
+    maxHeight: 50,
     borderColor: "gray",
     borderWidth: 1,
     width: "88%",
     padding: 5,
+    paddingLeft: 10,
     fontSize: 16,
     fontWeight: "300",
     color: "#757083",
     opacity: 0.5,
   },
   btn: {
-    marginTop: 30,
+    flex: 1,
   },
   subtitle: {
     fontSize: 16,
@@ -108,8 +128,9 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   colorSwatch: {
-    padding: 20,
     flex: 1,
+    padding: 20,
+    marginTop: 5,
   },
   swatches: {
     flex: 1,
