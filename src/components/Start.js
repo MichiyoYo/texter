@@ -168,7 +168,6 @@ const styles = StyleSheet.create({
     marginRight: 15,
     height: 25,
     width: 25,
-    resizeMode: "stretch",
     alignItems: "center",
   },
   input: {

@@ -2,29 +2,6 @@
 # yarn lockfile v1
 
 
-"@ant-design/colors@^6.0.0":
-  "integrity" "sha512-qAZRvPzfdWHtfameEGP2Qvuf838NhergR35o+EuVyB5XvSA98xod5r4utvi4TJ3ywmevm290g9nsCG5MryrdWQ=="
-  "resolved" "https://registry.npmjs.org/@ant-design/colors/-/colors-6.0.0.tgz"
-  "version" "6.0.0"
-  dependencies:
-    "@ctrl/tinycolor" "^3.4.0"
-
-"@ant-design/icons-svg@^4.2.1":
-  "integrity" "sha512-EB0iwlKDGpG93hW8f85CTJTs4SvMX7tt5ceupvhALp1IF44SeUFOMhKUOYqpsoYWQKAOuTRDMqn75rEaKDp0Xw=="
-  "resolved" "https://registry.npmjs.org/@ant-design/icons-svg/-/icons-svg-4.2.1.tgz"
-  "version" "4.2.1"
-
-"@ant-design/icons@^4.7.0":
-  "integrity" "sha512-aoB4Z7JA431rt6d4u+8xcNPPCrdufSRMUOpxa1ab6mz1JCQZOEVolj2WVs/tDFmN62zzK30mNelEsprLYsSF3g=="
-  "resolved" "https://registry.npmjs.org/@ant-design/icons/-/icons-4.7.0.tgz"
-  "version" "4.7.0"
-  dependencies:
-    "@ant-design/colors" "^6.0.0"
-    "@ant-design/icons-svg" "^4.2.1"
-    "@babel/runtime" "^7.11.2"
-    "classnames" "^2.2.6"
-    "rc-util" "^5.9.4"
-
 "@babel/code-frame@^7.0.0", "@babel/code-frame@^7.14.5", "@babel/code-frame@^7.15.8":
   "integrity" "sha512-2IAnmn8zbvC/jKYhq5Ki9I+DwjlrtMPUCH/CpHvqI4dNnlwHwsxoIhlc8WcYY5LSYknXQtAlFYuHfqAFCvQ4Wg=="
   "resolved" "https://registry.npmjs.org/@babel/code-frame/-/code-frame-7.15.8.tgz"
@@ -1008,7 +985,7 @@
     "pirates" "^4.0.0"
     "source-map-support" "^0.5.16"
 
-"@babel/runtime@^7.11.2", "@babel/runtime@^7.12.5", "@babel/runtime@^7.14.0", "@babel/runtime@^7.8.4":
+"@babel/runtime@^7.14.0", "@babel/runtime@^7.8.4":
   "integrity" "sha512-99catp6bHCaxr4sJ/DbTGgHS4+Rs2RVd2g7iOap6SLGPDknRK9ztKNsE/Fg6QhSeh1FGE5f6gHGQmvvn3I3xhw=="
   "resolved" "https://registry.npmjs.org/@babel/runtime/-/runtime-7.15.4.tgz"
   "version" "7.15.4"
@@ -1054,11 +1031,6 @@
   dependencies:
     "exec-sh" "^0.3.2"
     "minimist" "^1.2.0"
-
-"@ctrl/tinycolor@^3.4.0":
-  "integrity" "sha512-JZButFdZ1+/xAfpguQHoabIXkcqRRKpMrWKBkpEZZyxfY9C1DpADFB8PEqGSTeFr135SaTRfKqGKx5xSCLI7ZQ=="
-  "resolved" "https://registry.npmjs.org/@ctrl/tinycolor/-/tinycolor-3.4.0.tgz"
-  "version" "3.4.0"
 
 "@egjs/hammerjs@^2.0.17":
   "integrity" "sha512-XQsZgjm2EcVUiZQf11UBJQfmZeEmOW8DpI1gsFeln6w0ae0ii4dMQEQ0kjl6DspdWX1aGY1/loyXnP0JS06e/A=="
@@ -2047,11 +2019,6 @@
     "define-property" "^0.2.5"
     "isobject" "^3.0.0"
     "static-extend" "^0.1.1"
-
-"classnames@^2.2.6":
-  "integrity" "sha512-OlQdbZ7gLfGarSqxesMesDa5uz7KFbID8Kpq/SxIoNGDqY8lSYs0D+hhtBXhcdB3rcbXArFr7vlHheLk1voeNA=="
-  "resolved" "https://registry.npmjs.org/classnames/-/classnames-2.3.1.tgz"
-  "version" "2.3.1"
 
 "cli-cursor@^2.1.0":
   "integrity" "sha1-s12sN2R5+sw+lHR9QdDQ9SOP/LU="
@@ -4656,15 +4623,6 @@
   "resolved" "https://registry.npmjs.org/range-parser/-/range-parser-1.2.1.tgz"
   "version" "1.2.1"
 
-"rc-util@^5.9.4":
-  "integrity" "sha512-2vy6/Z1BJUcwLjm/UEJb/htjUTQPigITUIemCcFEo1fQevAumc9sA32x2z5qyWoa9uhrXbiAjSDpPIUqyg65sA=="
-  "resolved" "https://registry.npmjs.org/rc-util/-/rc-util-5.14.0.tgz"
-  "version" "5.14.0"
-  dependencies:
-    "@babel/runtime" "^7.12.5"
-    "react-is" "^16.12.0"
-    "shallowequal" "^1.1.0"
-
 "react-devtools-core@^4.6.0":
   "integrity" "sha512-ep2j84M1ZtDFWsTtFrKyLyg4GEbnw4gFj/8brA+BZtsINgKHhWEVzscz5E/bFWRdyTM8mWdcaKQAk2hR+IezPw=="
   "resolved" "https://registry.npmjs.org/react-devtools-core/-/react-devtools-core-4.20.2.tgz"
@@ -4673,7 +4631,7 @@
     "shell-quote" "^1.6.1"
     "ws" "^7"
 
-"react-dom@>=16.0.0", "react-dom@>=16.9.0", "react-dom@>=17.0.1", "react-dom@17.0.1":
+"react-dom@>=17.0.1", "react-dom@17.0.1":
   "integrity" "sha512-6eV150oJZ9U2t9svnsspTMrWNyHc6chX0KzDeAOXftRa8bNeOKTTfCJ7KorIwenkHd2xqVTBTCZd79yk/lx/Ug=="
   "resolved" "https://registry.npmjs.org/react-dom/-/react-dom-17.0.1.tgz"
   "version" "17.0.1"
@@ -4682,7 +4640,7 @@
     "object-assign" "^4.1.1"
     "scheduler" "^0.20.1"
 
-"react-is@^16.12.0", "react-is@^16.13.0", "react-is@^16.7.0", "react-is@^16.8.1":
+"react-is@^16.13.0", "react-is@^16.7.0", "react-is@^16.8.1":
   "integrity" "sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ=="
   "resolved" "https://registry.npmjs.org/react-is/-/react-is-16.13.1.tgz"
   "version" "16.13.1"
@@ -4819,7 +4777,7 @@
   "resolved" "https://registry.npmjs.org/react-refresh/-/react-refresh-0.4.3.tgz"
   "version" "0.4.3"
 
-"react@*", "react@^16.8.0 || ^17.0.0", "react@>=16.0", "react@>=16.0.0", "react@>=16.9.0", "react@>=17.0.1", "react@17.0.1":
+"react@*", "react@^16.8.0 || ^17.0.0", "react@>=16.0", "react@>=17.0.1", "react@17.0.1":
   "integrity" "sha512-lG9c9UuMHdcAexXtigOZLX8exLWkW0Ku29qPRU8uhF2R9BN96dLCt0psvzPLlHc5OWkgymP3qwTRgbnw5BKx3w=="
   "resolved" "https://registry.npmjs.org/react/-/react-17.0.1.tgz"
   "version" "17.0.1"
@@ -5167,11 +5125,6 @@
   "version" "3.0.1"
   dependencies:
     "kind-of" "^6.0.2"
-
-"shallowequal@^1.1.0":
-  "integrity" "sha512-y0m1JoUZSlPAjXVtPPW70aZWfIL/dSP7AFkRnniLCrK/8MDKog3TySTBmckD+RObVxH0v4Tox67+F14PdED2oQ=="
-  "resolved" "https://registry.npmjs.org/shallowequal/-/shallowequal-1.1.0.tgz"
-  "version" "1.1.0"
 
 "shebang-command@^1.2.0":
   "integrity" "sha1-RKrGW2lbAzmJaMOfNj/uXer98eo="
