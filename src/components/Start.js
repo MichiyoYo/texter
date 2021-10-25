@@ -10,6 +10,7 @@ import {
 import { TextInput, TouchableOpacity } from "react-native-gesture-handler";
 import bgImage from "../assets/images/texter-bg.png";
 import logo from "../assets/images/texter-logo.png";
+import Icon from "react-native-vector-icons/FontAwesome";
 /**
  * Start is the component that gets renderd as a splash screen
  * from where the user can type a name and pick a background color
@@ -48,12 +49,20 @@ class Start extends Component {
         >
           <Text style={styles.h1}>Texter</Text>
           <View style={styles.box}>
-            <TextInput
-              style={styles.input}
-              onChangeText={(text) => this.setState({ name: text })}
-              value={this.state.name}
-              placeholder="Your Name"
-            />
+            <View style={styles.inputField}>
+              <Icon
+                style={styles.iconStyle}
+                name="user"
+                size={30}
+                color="#888"
+              />
+              <TextInput
+                style={styles.input}
+                onChangeText={(text) => this.setState({ name: text })}
+                value={this.state.name}
+                placeholder="Your Name"
+              />
+            </View>
             <View style={styles.colorSwatch}>
               <Text style={styles.subtitle}>Choose Background Color</Text>
               <View style={styles.swatches}>
@@ -128,7 +137,7 @@ const styles = StyleSheet.create({
     paddingTop: 60,
   },
   box: {
-    backgroundColor: "#ffffffc4",
+    backgroundColor: "#ffffff",
     flexGrow: 1,
     flexShrink: 0,
     width: "88%",
@@ -142,19 +151,40 @@ const styles = StyleSheet.create({
     maxHeight: 290,
     borderRadius: 20,
   },
+  inputField: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#fff",
+    borderWidth: 0.5,
+    borderColor: "#000",
+    height: 50,
+    borderRadius: 5,
+    margin: 10,
+  },
+  iconStyle: {
+    //padding: 10,
+    marginLeft: 15,
+    marginRight: 15,
+    height: 25,
+    width: 25,
+    resizeMode: "stretch",
+    alignItems: "center",
+  },
   input: {
     flex: 1,
-    height: 50,
-    maxHeight: 50,
-    borderColor: "gray",
-    borderWidth: 1,
-    width: "88%",
-    padding: 5,
-    paddingLeft: 10,
-    fontSize: 16,
-    fontWeight: "300",
-    color: "#757083",
-    opacity: 0.5,
+    fontSize: 18,
+    color: "#888",
+    // height: 50,
+    // maxHeight: 50,
+    // borderColor: "gray",
+    // borderWidth: 1,
+    // width: "88%",
+    // padding: 5,
+    // paddingLeft: 10,
+    // fontSize: 16,
+    // fontWeight: "300",
+    // color: "#757083",
   },
   btn: {
     flex: 1,
