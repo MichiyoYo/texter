@@ -6,6 +6,7 @@ import {
   View,
   Button,
   Image,
+  Pressable,
 } from "react-native";
 import { TextInput, TouchableOpacity } from "react-native-gesture-handler";
 import bgImage from "../assets/images/pure-bg.png";
@@ -89,18 +90,17 @@ class Start extends Component {
                 </TouchableOpacity>
               </View>
             </View>
-            <Button
+            <Pressable
               style={styles.btn}
-              title="Start Chatting"
-              color={"#6705e9"}
-              containerViewStyle={{ width: "100%", marginLeft: 0 }}
               onPress={() =>
                 this.props.navigation.navigate("Chat", {
                   name: this.state.name,
                   bgColor: this.state.bgColor,
                 })
               }
-            />
+            >
+              <Text style={styles.btnText}>Start Texting</Text>
+            </Pressable>
           </View>
         </ImageBackground>
       </View>
@@ -160,7 +160,8 @@ const styles = StyleSheet.create({
     borderColor: "#000",
     height: 50,
     borderRadius: 5,
-    margin: 10,
+    marginHorizontal: 10,
+    marginVertical: 0,
   },
   iconStyle: {
     //padding: 10,
@@ -177,6 +178,23 @@ const styles = StyleSheet.create({
   },
   btn: {
     flex: 1,
+    backgroundColor: "#6705e9",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    paddingVertical: 0,
+    paddingHorizontal: 32,
+    marginTop: 10,
+    width: "90%",
+  },
+  btnText: {
+    fontSize: 16,
+    marginTop: 0,
+    marginBottom: 0,
+    textAlign: "center",
+    color: "#fff",
+    textTransform: "uppercase",
+    fontWeight: "bold",
   },
   subtitle: {
     fontSize: 16,
@@ -188,7 +206,6 @@ const styles = StyleSheet.create({
   colorSwatch: {
     flex: 1,
     padding: 20,
-    marginTop: 5,
   },
   swatches: {
     flex: 1,
