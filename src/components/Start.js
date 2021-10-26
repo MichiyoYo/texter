@@ -48,8 +48,14 @@ class Start extends Component {
           resizeMode="cover"
           style={styles.bgImage}
         >
-          {/* <Text style={styles.h1}>Texter</Text> */}
-          <Image style={styles.logo} source={logo} />
+          <Image
+            accessibile={true}
+            accessibilityLabel="Texter logo"
+            accessibilityHint="The logo is a smily face and under it there is the app title 'Texter'"
+            accessibilityRole="image"
+            style={styles.logo}
+            source={logo}
+          />
           <View style={styles.box}>
             <View style={styles.inputField}>
               <Icon
@@ -59,6 +65,9 @@ class Start extends Component {
                 color="#888"
               />
               <TextInput
+                accessibile={true}
+                accessibilityLabel="Your Name"
+                accessibilityHint="Type the name you want to use in the chat session"
                 style={styles.input}
                 onChangeText={(text) => this.setState({ name: text })}
                 value={this.state.name}
@@ -69,21 +78,37 @@ class Start extends Component {
               <Text style={styles.subtitle}>Choose Background Color</Text>
               <View style={styles.swatches}>
                 <TouchableOpacity
+                  accessibile={true}
+                  accessibilityLabel="Select orange background"
+                  accessibilityHint="Lets you choose an orange background for the chat screen"
+                  accessibilityRole="button"
                   onPress={() => this.changeBgColor(this.colors.orange)}
                 >
                   <View style={styles.swatch1}></View>
                 </TouchableOpacity>
                 <TouchableOpacity
+                  accessibile={true}
+                  accessibilityLabel="Select magenta background"
+                  accessibilityHint="Lets you choose a magenta background for the chat screen"
+                  accessibilityRole="button"
                   onPress={() => this.changeBgColor(this.colors.magenta)}
                 >
                   <View style={styles.swatch2}></View>
                 </TouchableOpacity>
                 <TouchableOpacity
+                  accessibile={true}
+                  accessibilityLabel="Select fucsia background"
+                  accessibilityHint="Lets you choose a fucsia background for the chat screen"
+                  accessibilityRole="button"
                   onPress={() => this.changeBgColor(this.colors.fucsia)}
                 >
                   <View style={styles.swatch3}></View>
                 </TouchableOpacity>
                 <TouchableOpacity
+                  accessibile={true}
+                  accessibilityLabel="Select purple background"
+                  accessibilityHint="Lets you choose a purple background for the chat screen"
+                  accessibilityRole="button"
                   onPress={() => this.changeBgColor(this.colors.purple)}
                 >
                   <View style={styles.swatch4}></View>
@@ -92,6 +117,10 @@ class Start extends Component {
             </View>
             <Pressable
               style={styles.btn}
+              accessibile={true}
+              accessibilityLabel="Start texting"
+              accessibilityHint="Lets you start a new chat session"
+              accessibilityRole="button"
               onPress={() =>
                 this.props.navigation.navigate("Chat", {
                   name: this.state.name,
@@ -186,6 +215,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 32,
     marginTop: 10,
     width: "90%",
+    borderRadius: 5,
   },
   btnText: {
     fontSize: 16,
