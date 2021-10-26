@@ -40,7 +40,7 @@ class Chat extends Component {
         },
         {
           _id: 2,
-          text: "This is a system message",
+          text: `${name ? name : "Anonymous"} joined the conversation 👋`,
           createdAt: new Date(),
           system: true,
         },
@@ -58,6 +58,11 @@ class Chat extends Component {
     }));
   }
 
+  /**
+   * Renderes a customized chat bubble
+   * @param {*} props
+   * @returns a JSX element that rapresents a text bubble with custon bg color
+   */
   renderBubble(props) {
     return (
       <Bubble

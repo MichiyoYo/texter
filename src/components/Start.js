@@ -49,7 +49,7 @@ class Start extends Component {
           style={styles.bgImage}
         >
           <Image
-            accessibile={true}
+            accessible={true}
             accessibilityLabel="Texter logo"
             accessibilityHint="The logo is a smily face and under it there is the app title 'Texter'"
             accessibilityRole="image"
@@ -65,7 +65,7 @@ class Start extends Component {
                 color="#888"
               />
               <TextInput
-                accessibile={true}
+                accessible={true}
                 accessibilityLabel="Your Name"
                 accessibilityHint="Type the name you want to use in the chat session"
                 style={styles.input}
@@ -78,7 +78,7 @@ class Start extends Component {
               <Text style={styles.subtitle}>Choose Background Color</Text>
               <View style={styles.swatches}>
                 <TouchableOpacity
-                  accessibile={true}
+                  accessible={true}
                   accessibilityLabel="Select orange background"
                   accessibilityHint="Lets you choose an orange background for the chat screen"
                   accessibilityRole="button"
@@ -87,7 +87,7 @@ class Start extends Component {
                   <View style={styles.swatch1}></View>
                 </TouchableOpacity>
                 <TouchableOpacity
-                  accessibile={true}
+                  accessible={true}
                   accessibilityLabel="Select magenta background"
                   accessibilityHint="Lets you choose a magenta background for the chat screen"
                   accessibilityRole="button"
@@ -96,7 +96,7 @@ class Start extends Component {
                   <View style={styles.swatch2}></View>
                 </TouchableOpacity>
                 <TouchableOpacity
-                  accessibile={true}
+                  accessible={true}
                   accessibilityLabel="Select fucsia background"
                   accessibilityHint="Lets you choose a fucsia background for the chat screen"
                   accessibilityRole="button"
@@ -105,7 +105,7 @@ class Start extends Component {
                   <View style={styles.swatch3}></View>
                 </TouchableOpacity>
                 <TouchableOpacity
-                  accessibile={true}
+                  accessible={true}
                   accessibilityLabel="Select purple background"
                   accessibilityHint="Lets you choose a purple background for the chat screen"
                   accessibilityRole="button"
@@ -117,7 +117,7 @@ class Start extends Component {
             </View>
             <Pressable
               style={styles.btn}
-              accessibile={true}
+              accessible={true}
               accessibilityLabel="Start texting"
               accessibilityHint="Lets you start a new chat session"
               accessibilityRole="button"
