@@ -1,13 +1,13 @@
 import React, { Component } from "react";
 import {
   StyleSheet,
+  ImageBackground,
   Text,
   View,
   Platform,
   KeyboardAvoidingView,
 } from "react-native";
 import { Bubble, GiftedChat } from "react-native-gifted-chat";
-
 /**
  * The Chat class renders the screen where the chat happens
  */
@@ -80,7 +80,7 @@ class Chat extends Component {
   }
 
   render() {
-    const { bgColor } = this.props.route.params;
+    const { bgColor, bgImage } = this.props.route.params;
     return (
       <View
         style={{
@@ -88,17 +88,23 @@ class Chat extends Component {
           backgroundColor: bgColor ? bgColor : "#fff",
         }}
       >
-        <GiftedChat
-          renderBubble={this.renderBubble.bind(this)}
-          messages={this.state.messages}
-          onSend={(messages) => this.onSend(messages)}
-          user={{
-            _id: 1,
-          }}
-        />
-        {Platform.OS === "android" ? (
-          <KeyboardAvoidingView behavior="height" />
-        ) : null}
+        <ImageBackground
+          source={bgImage}
+          resizeMode="cover"
+          style={styles.bgImage}
+        >
+          <GiftedChat
+            renderBubble={this.renderBubble.bind(this)}
+            messages={this.state.messages}
+            onSend={(messages) => this.onSend(messages)}
+            user={{
+              _id: 1,
+            }}
+          />
+          {Platform.OS === "android" ? (
+            <KeyboardAvoidingView behavior="height" />
+          ) : null}
+        </ImageBackground>
       </View>
     );
   }
@@ -107,4 +113,10 @@ class Chat extends Component {
 export default Chat;
 
 // Styles for Chat view
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  bgImage: {
+    flex: 1,
+    width: "100%",
+    flexDirection: "column",
+  },
+});

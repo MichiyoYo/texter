@@ -12,6 +12,12 @@ import { TextInput, TouchableOpacity } from "react-native-gesture-handler";
 import bgImage from "../assets/images/pure-bg.png";
 import logo from "../assets/images/logo-text.png";
 import Icon from "react-native-vector-icons/FontAwesome";
+
+import green from "../assets/images/backgrounds/green.jpg";
+import pastel from "../assets/images/backgrounds/pastel.jpg";
+import rainbow from "../assets/images/backgrounds/rainbow.jpg";
+import yellow from "../assets/images/backgrounds/yellow.jpg";
+
 /**
  * Start is the component that gets renderd as a splash screen
  * from where the user can type a name and pick a background color
@@ -21,24 +27,19 @@ class Start extends Component {
   // The state of the current component
   state = {
     name: "",
-    bgColor: "",
+    bgColor: "#fff",
+    bgImage: rainbow,
   };
 
   /**
-   * Updates the state with the background color picked from the swatch
-   * @param {*} newColor the new color used to update the state
+   * Updates the state with the background image picked from the swatch
+   * @param {*} img the new color used to update the state
    */
-  changeBgColor = (newColor) => {
-    this.setState({ bgColor: newColor });
+  setBgImage = (img) => {
+    this.setState({ bgImage: img });
   };
 
-  // The colors for the swatch
-  colors = {
-    orange: "#f44336",
-    magenta: "#e91e63",
-    fucsia: "#9c27b0",
-    purple: "#673ab7",
-  };
+  bgImages = {};
 
   render() {
     return (
@@ -79,10 +80,10 @@ class Start extends Component {
               <View style={styles.swatches}>
                 <TouchableOpacity
                   accessible={true}
-                  accessibilityLabel="Select orange background"
-                  accessibilityHint="Lets you choose an orange background for the chat screen"
+                  accessibilityLabel="Select green background"
+                  accessibilityHint="Lets you choose a background for the chat screen"
                   accessibilityRole="button"
-                  onPress={() => this.changeBgColor(this.colors.orange)}
+                  onPress={() => this.setBgImage(green)}
                 >
                   <View style={styles.swatch1}></View>
                 </TouchableOpacity>
@@ -91,7 +92,7 @@ class Start extends Component {
                   accessibilityLabel="Select magenta background"
                   accessibilityHint="Lets you choose a magenta background for the chat screen"
                   accessibilityRole="button"
-                  onPress={() => this.changeBgColor(this.colors.magenta)}
+                  onPress={() => this.setBgImage(pastel)}
                 >
                   <View style={styles.swatch2}></View>
                 </TouchableOpacity>
@@ -100,7 +101,7 @@ class Start extends Component {
                   accessibilityLabel="Select fucsia background"
                   accessibilityHint="Lets you choose a fucsia background for the chat screen"
                   accessibilityRole="button"
-                  onPress={() => this.changeBgColor(this.colors.fucsia)}
+                  onPress={() => this.setBgImage(rainbow)}
                 >
                   <View style={styles.swatch3}></View>
                 </TouchableOpacity>
@@ -109,7 +110,7 @@ class Start extends Component {
                   accessibilityLabel="Select purple background"
                   accessibilityHint="Lets you choose a purple background for the chat screen"
                   accessibilityRole="button"
-                  onPress={() => this.changeBgColor(this.colors.purple)}
+                  onPress={() => this.setBgImage(yellow)}
                 >
                   <View style={styles.swatch4}></View>
                 </TouchableOpacity>
@@ -125,6 +126,7 @@ class Start extends Component {
                 this.props.navigation.navigate("Chat", {
                   name: this.state.name,
                   bgColor: this.state.bgColor,
+                  bgImage: this.state.bgImage,
                 })
               }
             >
@@ -245,25 +247,25 @@ const styles = StyleSheet.create({
   swatch1: {
     width: 40,
     height: 40,
-    backgroundColor: "#f44336",
+    backgroundColor: "#04e0ac",
     borderRadius: 40,
   },
   swatch2: {
     width: 40,
     height: 40,
-    backgroundColor: "#e91e63",
+    backgroundColor: "#f582a9",
     borderRadius: 40,
   },
   swatch3: {
     width: 40,
     height: 40,
-    backgroundColor: "#9c27b0",
+    backgroundColor: "#55e2fe",
     borderRadius: 40,
   },
   swatch4: {
     width: 40,
     height: 40,
-    backgroundColor: "#673ab7",
+    backgroundColor: "#fdd55b",
     borderRadius: 40,
   },
 });
