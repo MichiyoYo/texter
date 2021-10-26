@@ -9,10 +9,11 @@ import {
   Pressable,
 } from "react-native";
 import { TextInput, TouchableOpacity } from "react-native-gesture-handler";
+
+//importing images
 import bgImage from "../assets/images/pure-bg.png";
 import logo from "../assets/images/logo-text.png";
 import Icon from "react-native-vector-icons/FontAwesome";
-
 import green from "../assets/images/backgrounds/green.jpg";
 import pastel from "../assets/images/backgrounds/pastel.jpg";
 import rainbow from "../assets/images/backgrounds/rainbow.jpg";
@@ -38,8 +39,6 @@ class Start extends Component {
   setBgImage = (img) => {
     this.setState({ bgImage: img });
   };
-
-  bgImages = {};
 
   render() {
     return (

@@ -13,6 +13,7 @@ import {
   SystemMessage,
   Day,
 } from "react-native-gifted-chat";
+
 /**
  * The Chat class renders the screen where the chat happens
  */
