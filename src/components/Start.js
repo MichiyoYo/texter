@@ -8,8 +8,8 @@ import {
   Image,
 } from "react-native";
 import { TextInput, TouchableOpacity } from "react-native-gesture-handler";
-import bgImage from "../assets/images/texter-bg.png";
-import logo from "../assets/images/texter-logo.png";
+import bgImage from "../assets/images/pure-bg.png";
+import logo from "../assets/images/logo-text.png";
 import Icon from "react-native-vector-icons/FontAwesome";
 /**
  * Start is the component that gets renderd as a splash screen
@@ -47,7 +47,8 @@ class Start extends Component {
           resizeMode="cover"
           style={styles.bgImage}
         >
-          <Text style={styles.h1}>Texter</Text>
+          {/* <Text style={styles.h1}>Texter</Text> */}
+          <Image style={styles.logo} source={logo} />
           <View style={styles.box}>
             <View style={styles.inputField}>
               <Icon
@@ -123,11 +124,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   logo: {
-    width: "50%",
+    width: "70%",
     height: "auto",
-    backgroundColor: "purple",
-    flexGrow: 2,
-    flexShrink: 1,
+    resizeMode: "contain",
+    flex: 1,
   },
   h1: {
     flexGrow: 1,
@@ -174,16 +174,6 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 18,
     color: "#888",
-    // height: 50,
-    // maxHeight: 50,
-    // borderColor: "gray",
-    // borderWidth: 1,
-    // width: "88%",
-    // padding: 5,
-    // paddingLeft: 10,
-    // fontSize: 16,
-    // fontWeight: "300",
-    // color: "#757083",
   },
   btn: {
     flex: 1,
