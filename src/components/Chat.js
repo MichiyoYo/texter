@@ -15,7 +15,16 @@ import {
   Day,
 } from "react-native-gifted-chat";
 import "firebase/firestore";
-import { collection, onSnapshot, setDoc, doc } from "@firebase/firestore";
+import {
+  collection,
+  onSnapshot,
+  setDoc,
+  doc,
+  query,
+  orderBy,
+} from "@firebase/firestore";
+import { getAuth, onAuthStateChanged, signInAnonymously } from "firebase/auth";
+
 import { db } from "../firebase";
 
 /**
@@ -33,6 +42,25 @@ class Chat extends Component {
    * before the options of the current screen are set
    */
   componentDidMount() {
+    const auth = getAuth();
+    this.authUnsubscribe = onAuthStateChanged(auth, (user) => {
+      if (!user) {
+        signInAnonymously(auth)
+          .then(() => {
+            console.log("signed in anonymously");
+          })
+          .catch((err) => {
+            console.error(err);
+          });
+      } else {
+        //user is signed in
+        this.setState({
+          uid: user.uid,
+          messages: [],
+        });
+      }
+    });
+
     const { name } = this.props.route.params;
     const systemMsg = {
       _id: "sys-0000",
@@ -42,11 +70,17 @@ class Chat extends Component {
     };
 
     this.props.navigation.setOptions({ title: name ? name : "Anonymous" });
+
     this.msgCollection = collection(db, "messages");
+    //const query = query(this.msgCollection, orderBy("createdAt", "desc"));
+
     if (this.msgCollection) {
-      this.unsubscribe = onSnapshot(this.msgCollection, (snapshot) => {
-        this.onCollectionUpdate(snapshot);
-      });
+      this.unsubscribe = onSnapshot(
+        query(this.msgCollection, orderBy("createdAt", "desc")),
+        (snapshot) => {
+          this.onCollectionUpdate(snapshot);
+        }
+      );
       this.addMessages(systemMsg);
     } else {
       console.error("There was an error while retrieving the collection");
@@ -65,7 +99,7 @@ class Chat extends Component {
     const messages = [];
     snapshot.forEach((doc) => {
       let data = { ...doc.data() };
-      data.sortMsgs;
+
       messages.push({
         _id: doc.id,
         createdAt: data.createdAt.toDate(),
