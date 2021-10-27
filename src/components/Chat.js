@@ -13,6 +13,9 @@ import {
   SystemMessage,
   Day,
 } from "react-native-gifted-chat";
+import "firebase/firestore";
+import { collection, onSnapshot, setDoc, doc } from "@firebase/firestore";
+import { db } from "../firebase";
 
 /**
  * The Chat class renders the screen where the chat happens
@@ -31,29 +34,39 @@ class Chat extends Component {
   componentDidMount() {
     const { name } = this.props.route.params;
     this.props.navigation.setOptions({ title: name ? name : "Anonymous" });
-    this.setState({
-      messages: [
-        {
-          _id: 1,
-          text: "Hello developer",
-          createdAt: new Date(),
-          user: {
-            _id: 2,
-            name: "Cree",
-            avatar:
-              "https://coach-courses-us.s3.amazonaws.com/users/photos/thumb/44589.jpg?1627430194",
-          },
-        },
-        {
-          _id: 2,
-          text: `${name ? name : "Anonymous"} joined the conversation 👋`,
-          createdAt: new Date(),
-          system: true,
-        },
-      ],
-    });
+    this.msgCollection = collection(db, "messages");
+    if (this.msgCollection) {
+      this.unsubscribe = onSnapshot(this.msgCollection, (snapshot) => {
+        this.onCollectionUpdate(snapshot);
+      });
+    } else {
+      console.error("There was an error while retrieving the collection");
+    }
   }
 
+  componentWillUnmount() {
+    this.unsubscribe();
+  }
+
+  onCollectionUpdate = (snapshot) => {
+    const messages = [];
+    snapshot.forEach((doc) => {
+      let data = { ...doc.data() };
+      messages.push({
+        _id: doc.id,
+        createdAt: data.createdAt.toDate(),
+        text: data.text,
+        system: data.system,
+        user: data.user,
+      });
+    });
+    this.setState({ messages });
+  };
+
+  addMessage = async (message) => {
+    const docRef = doc(db, "messages", message._id);
+    await setDoc(docRef, message);
+  };
   /**
    * Updates the state by appending the last sent message to the rest
    * @param {*} messages the sent message
