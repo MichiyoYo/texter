@@ -7,6 +7,7 @@ import {
   Platform,
   KeyboardAvoidingView,
   Button,
+  LogBox,
 } from "react-native";
 import {
   Bubble,
@@ -36,51 +37,70 @@ class Chat extends Component {
     super();
     this.state = {
       messages: [],
-      uid: null,
+      uid: 0,
       loadingMsg: "Loading the conversation...",
-      ursName: "",
+      user: {
+        _id: 0,
+        name: "",
+        avatar: "",
+      },
     };
+    LogBox.ignoreLogs([
+      "Setting a timer",
+      "Warning: ...",
+      "undefined",
+      "Animated.event now requires a second argument for options",
+    ]);
   }
   /**
    * Lifecycle method to make sure that the component mounted
    * before the options of the current screen are set
    */
   componentDidMount() {
+    //get user name from start screen
     const { name } = this.props.route.params;
-
-    const auth = getAuth();
-    this.authUnsubscribe = onAuthStateChanged(auth, (user) => {
-      if (!user) {
-        signInAnonymously(auth)
-          .then(() => {
-            console.log("signed in anonymously");
-          })
-          .catch((err) => {
-            console.error(err);
-          });
-      } else {
-        //user is signed in
-        this.setState({
-          uid: user.uid,
-          messages: [],
-          loadingMsg: "",
-          ursName: name ? name : "Anonymous",
-        });
-      }
-    });
-
-    //setting up system message with name of the user when they join the convo
-    const systemMsg = {
-      _id: `sys-${Math.floor(Math.random() * 10000)}`,
-      text: `${name ? name : "Anonymous"} joined the conversation 👋`,
-      createdAt: new Date(),
-      system: true,
-    };
 
     //setting up the screen title
     this.props.navigation.setOptions({ title: name ? name : "Anonymous" });
 
+    const auth = getAuth();
+    this.authUnsubscribe = onAuthStateChanged(auth, async (user) => {
+      if (!user) {
+        await signInAnonymously(auth);
+      }
+      //adding user to state
+      this.setState({
+        uid: user.uid,
+        messages: [],
+        loadingMsg: "",
+        user: {
+          _id: user.uid,
+          name: name,
+          avatar: "https://placeimg.com/140/140/any",
+        },
+      });
+
+      this.msgCollection = collection(db, "messages");
+      //listening for collection changes for the current user
+      this.unsubscribeChatUser = onSnapshot(
+        query(this.msgCollection, orderBy("createdAt", "desc")),
+        (snapshot) => {
+          this.onCollectionUpdate(snapshot);
+        }
+      );
+
+      //setting up system message with name of the user when they join the convo
+      const systemMsg = {
+        _id: `sys-${Math.floor(Math.random() * 10000)}`,
+        text: `${name ? name : "Anonymous"} joined the conversation 👋`,
+        createdAt: new Date(),
+        system: true,
+      };
+      this.addMessages(systemMsg);
+    });
+
     //reference to the messages collection
+    /*
     this.msgCollection = collection(db, "messages");
 
     if (this.msgCollection) {
@@ -98,13 +118,16 @@ class Chat extends Component {
     } else {
       console.error("There was an error while retrieving the collection");
     }
+    */
   }
 
   /**
-   * Lifecycle method used to unsubsribe from updates when component unmounts
+   * Lifecycle method used to unsubsribe from updates and authentications
+   * when component unmounts
    */
   componentWillUnmount() {
-    this.unsubscribe();
+    this.authUnsubscribe();
+    this.unsubscribeChatUser();
   }
 
   /**
@@ -119,7 +142,7 @@ class Chat extends Component {
       messages.push({
         _id: doc.id,
         createdAt: data.createdAt.toDate(),
-        text: data.text,
+        text: data.text || "",
         system: data.system,
         user: data.user,
       });
@@ -146,11 +169,7 @@ class Chat extends Component {
       messages: GiftedChat.append(previousState.messages, messages),
       uid: this.state.uid,
     }));
-    if (this.state.messages.length > 0) {
-      this.addMessages(this.state.messages.at(0));
-    } else {
-      this.addMessages(this.state.messages);
-    }
+    this.addMessages(this.state.messages[0]);
   }
 
   /**
