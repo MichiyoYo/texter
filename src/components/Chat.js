@@ -38,6 +38,7 @@ class Chat extends Component {
       messages: [],
       uid: null,
       loadingMsg: "Loading the conversation...",
+      ursName: "",
     };
   }
   /**
@@ -45,6 +46,8 @@ class Chat extends Component {
    * before the options of the current screen are set
    */
   componentDidMount() {
+    const { name } = this.props.route.params;
+
     const auth = getAuth();
     this.authUnsubscribe = onAuthStateChanged(auth, (user) => {
       if (!user) {
@@ -61,11 +64,10 @@ class Chat extends Component {
           uid: user.uid,
           messages: [],
           loadingMsg: "",
+          ursName: name ? name : "Anonymous",
         });
       }
     });
-
-    const { name } = this.props.route.params;
 
     //setting up system message with name of the user when they join the convo
     const systemMsg = {
@@ -144,7 +146,11 @@ class Chat extends Component {
       messages: GiftedChat.append(previousState.messages, messages),
       uid: this.state.uid,
     }));
-    this.addMessages(this.state.messages.at(0));
+    if (this.state.messages.length > 0) {
+      this.addMessages(this.state.messages.at(0));
+    } else {
+      this.addMessages(this.state.messages);
+    }
   }
 
   /**
