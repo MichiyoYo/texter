@@ -63,7 +63,7 @@ class Chat extends Component {
 
     const { name } = this.props.route.params;
     const systemMsg = {
-      _id: "sys-0000",
+      _id: `sys-${Math.floor(Math.random() * 10000)}`,
       text: `${name} joined the conversation 👋`,
       createdAt: new Date(),
       system: true,
