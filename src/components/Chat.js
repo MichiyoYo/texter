@@ -6,6 +6,7 @@ import {
   View,
   Platform,
   KeyboardAvoidingView,
+  Button,
 } from "react-native";
 import {
   Bubble,
@@ -33,12 +34,20 @@ class Chat extends Component {
    */
   componentDidMount() {
     const { name } = this.props.route.params;
+    const systemMsg = {
+      _id: "sys-0000",
+      text: `${name} joined the conversation 👋`,
+      createdAt: new Date(),
+      system: true,
+    };
+
     this.props.navigation.setOptions({ title: name ? name : "Anonymous" });
     this.msgCollection = collection(db, "messages");
     if (this.msgCollection) {
       this.unsubscribe = onSnapshot(this.msgCollection, (snapshot) => {
         this.onCollectionUpdate(snapshot);
       });
+      this.addMessages(systemMsg);
     } else {
       console.error("There was an error while retrieving the collection");
     }
@@ -48,10 +57,15 @@ class Chat extends Component {
     this.unsubscribe();
   }
 
+  sortMsgs = (a, b) => {
+    b.createdAt - a.createdAt;
+  };
+
   onCollectionUpdate = (snapshot) => {
     const messages = [];
     snapshot.forEach((doc) => {
       let data = { ...doc.data() };
+      data.sortMsgs;
       messages.push({
         _id: doc.id,
         createdAt: data.createdAt.toDate(),
@@ -60,12 +74,13 @@ class Chat extends Component {
         user: data.user,
       });
     });
+
     this.setState({ messages });
   };
 
-  addMessage = async (message) => {
-    const docRef = doc(db, "messages", message._id);
-    await setDoc(docRef, message);
+  addMessages = async (msg) => {
+    const docRef = doc(db, "messages", msg._id);
+    await setDoc(docRef, msg);
   };
   /**
    * Updates the state by appending the last sent message to the rest
@@ -75,6 +90,8 @@ class Chat extends Component {
     this.setState((previousState) => ({
       messages: GiftedChat.append(previousState.messages, messages),
     }));
+    //console.log(this.state.messages.at(0));
+    this.addMessages(this.state.messages.at(0));
   }
 
   /**
@@ -118,6 +135,17 @@ class Chat extends Component {
 
   render() {
     const { bgColor, bgImage } = this.props.route.params;
+    const payload = {
+      _id: "12345",
+      createdAt: new Date("Oct 12, 2021"),
+      text: "testing add function not on press",
+      system: false,
+      user: {
+        _id: 3,
+        name: "banana",
+        avatar: "",
+      },
+    };
     return (
       <View
         style={{
@@ -138,6 +166,7 @@ class Chat extends Component {
             onSend={(messages) => this.onSend(messages)}
             user={{
               _id: 1,
+              avatar: "",
             }}
           />
           {Platform.OS === "android" ? (
