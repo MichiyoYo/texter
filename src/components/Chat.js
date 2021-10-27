@@ -21,6 +21,7 @@ import {
   setDoc,
   doc,
   query,
+  where,
   orderBy,
 } from "@firebase/firestore";
 import { getAuth, onAuthStateChanged, signInAnonymously } from "firebase/auth";
@@ -35,6 +36,8 @@ class Chat extends Component {
     super();
     this.state = {
       messages: [],
+      uid: null,
+      loadingMsg: "Loading the conversation...",
     };
   }
   /**
@@ -57,6 +60,7 @@ class Chat extends Component {
         this.setState({
           uid: user.uid,
           messages: [],
+          loadingMsg: "",
         });
       }
     });
@@ -64,19 +68,23 @@ class Chat extends Component {
     const { name } = this.props.route.params;
     const systemMsg = {
       _id: `sys-${Math.floor(Math.random() * 10000)}`,
-      text: `${name} joined the conversation 👋`,
+      text: `${name ? name : "Anonymous"} joined the conversation 👋`,
       createdAt: new Date(),
       system: true,
     };
 
+    //setting up the screen title
     this.props.navigation.setOptions({ title: name ? name : "Anonymous" });
 
     this.msgCollection = collection(db, "messages");
-    //const query = query(this.msgCollection, orderBy("createdAt", "desc"));
 
     if (this.msgCollection) {
       this.unsubscribe = onSnapshot(
-        query(this.msgCollection, orderBy("createdAt", "desc")),
+        query(
+          this.msgCollection,
+          // where("user._id", "==", this.state.uid),
+          orderBy("createdAt", "desc")
+        ),
         (snapshot) => {
           this.onCollectionUpdate(snapshot);
         }
@@ -123,6 +131,7 @@ class Chat extends Component {
   onSend(messages = []) {
     this.setState((previousState) => ({
       messages: GiftedChat.append(previousState.messages, messages),
+      uid: this.state.uid,
     }));
     //console.log(this.state.messages.at(0));
     this.addMessages(this.state.messages.at(0));
@@ -169,17 +178,7 @@ class Chat extends Component {
 
   render() {
     const { bgColor, bgImage } = this.props.route.params;
-    const payload = {
-      _id: "12345",
-      createdAt: new Date("Oct 12, 2021"),
-      text: "testing add function not on press",
-      system: false,
-      user: {
-        _id: 3,
-        name: "banana",
-        avatar: "",
-      },
-    };
+
     return (
       <View
         style={{
@@ -192,6 +191,7 @@ class Chat extends Component {
           resizeMode="cover"
           style={styles.bgImage}
         >
+          <Text style={styles.loadingMsg}>{this.state.loadingMsg}</Text>
           <GiftedChat
             renderBubble={this.renderBubble.bind(this)}
             renderSystemMessage={this.renderSystemMessage}
@@ -220,5 +220,12 @@ const styles = StyleSheet.create({
     flex: 1,
     width: "100%",
     flexDirection: "column",
+  },
+  loadingMsg: {
+    color: "#fff",
+    textAlign: "center",
+    margin: "auto",
+    fontSize: 12,
+    paddingVertical: 10,
   },
 });
