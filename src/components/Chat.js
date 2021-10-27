@@ -66,6 +66,8 @@ class Chat extends Component {
     });
 
     const { name } = this.props.route.params;
+
+    //setting up system message with name of the user when they join the convo
     const systemMsg = {
       _id: `sys-${Math.floor(Math.random() * 10000)}`,
       text: `${name ? name : "Anonymous"} joined the conversation 👋`,
@@ -76,6 +78,7 @@ class Chat extends Component {
     //setting up the screen title
     this.props.navigation.setOptions({ title: name ? name : "Anonymous" });
 
+    //reference to the messages collection
     this.msgCollection = collection(db, "messages");
 
     if (this.msgCollection) {
@@ -95,14 +98,17 @@ class Chat extends Component {
     }
   }
 
+  /**
+   * Lifecycle method used to unsubsribe from updates when component unmounts
+   */
   componentWillUnmount() {
     this.unsubscribe();
   }
 
-  sortMsgs = (a, b) => {
-    b.createdAt - a.createdAt;
-  };
-
+  /**
+   * Updates the state when a new message with the snapshot
+   * @param {*} snapshot
+   */
   onCollectionUpdate = (snapshot) => {
     const messages = [];
     snapshot.forEach((doc) => {
@@ -120,10 +126,15 @@ class Chat extends Component {
     this.setState({ messages });
   };
 
+  /**
+   * Adds a new message to the Firebase DB
+   * @param {} msg
+   */
   addMessages = async (msg) => {
     const docRef = doc(db, "messages", msg._id);
     await setDoc(docRef, msg);
   };
+
   /**
    * Updates the state by appending the last sent message to the rest
    * @param {*} messages the sent message
@@ -133,7 +144,6 @@ class Chat extends Component {
       messages: GiftedChat.append(previousState.messages, messages),
       uid: this.state.uid,
     }));
-    //console.log(this.state.messages.at(0));
     this.addMessages(this.state.messages.at(0));
   }
 
