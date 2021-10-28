@@ -6,7 +6,6 @@ import {
   View,
   Platform,
   KeyboardAvoidingView,
-  Button,
   LogBox,
 } from "react-native";
 import {
@@ -15,19 +14,19 @@ import {
   SystemMessage,
   Day,
 } from "react-native-gifted-chat";
-import "firebase/firestore";
-import {
-  collection,
-  onSnapshot,
-  setDoc,
-  doc,
-  query,
-  where,
-  orderBy,
-} from "@firebase/firestore";
-import { getAuth, onAuthStateChanged, signInAnonymously } from "firebase/auth";
 
-import { db } from "../firebase";
+import firebase from "firebase";
+import "firebase/firestore";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCWJ_wv-RsHaqXbmHuxCxSuCtX2FapWV40",
+  authDomain: "texter-d3961.firebaseapp.com",
+  projectId: "texter-d3961",
+  storageBucket: "texter-d3961.appspot.com",
+  messagingSenderId: "808156632674",
+  appId: "1:808156632674:web:87d866afa50e88da76233b",
+  measurementId: "G-KN346NCNXX",
+};
 
 /**
  * The Chat class renders the screen where the chat happens
@@ -37,14 +36,23 @@ class Chat extends Component {
     super();
     this.state = {
       messages: [],
-      uid: 0,
-      loadingMsg: "Loading the conversation...",
+      uid: 1,
       user: {
-        _id: 0,
+        _id: 1,
         name: "",
         avatar: "",
       },
     };
+
+    //initializing firebase
+    if (!firebase.apps.length) {
+      firebase.initializeApp(firebaseConfig);
+    }
+
+    //register for updates
+    this.refMessages = firebase.firestore().collection("messages");
+    this.refMsgsUser = null;
+
     LogBox.ignoreLogs([
       "Setting a timer",
       "Warning: ...",
@@ -59,20 +67,17 @@ class Chat extends Component {
   componentDidMount() {
     //get user name from start screen
     const { name } = this.props.route.params;
-
     //setting up the screen title
     this.props.navigation.setOptions({ title: name ? name : "Anonymous" });
 
-    const auth = getAuth();
-    this.authUnsubscribe = onAuthStateChanged(auth, async (user) => {
+    this.authUnsubscribe = firebase.auth().onAuthStateChanged((user) => {
       if (!user) {
-        await signInAnonymously(auth);
+        firebase.auth().signInAnonymously();
       }
-      //adding user to state
+
       this.setState({
         uid: user.uid,
         messages: [],
-        loadingMsg: "",
         user: {
           _id: user.uid,
           name: name,
@@ -80,45 +85,25 @@ class Chat extends Component {
         },
       });
 
-      this.msgCollection = collection(db, "messages");
-      //listening for collection changes for the current user
-      this.unsubscribeChatUser = onSnapshot(
-        query(this.msgCollection, orderBy("createdAt", "desc")),
-        (snapshot) => {
-          this.onCollectionUpdate(snapshot);
-        }
-      );
+      //referencing messages of current user
+      this.refMsgsUser = firebase
+        .firestore()
+        .collection("messages")
+        .where("uid", "==", this.state.uid);
 
-      //setting up system message with name of the user when they join the convo
-      const systemMsg = {
-        _id: `sys-${Math.floor(Math.random() * 10000)}`,
-        text: `${name ? name : "Anonymous"} joined the conversation 👋`,
-        createdAt: new Date(),
-        system: true,
-      };
-      this.addMessages(systemMsg);
+      this.unsubscribe = this.refMessages
+        .orderBy("createdAt", "desc")
+        .onSnapshot(this.onCollectionUpdate);
     });
 
-    //reference to the messages collection
-    /*
-    this.msgCollection = collection(db, "messages");
-
-    if (this.msgCollection) {
-      this.unsubscribe = onSnapshot(
-        query(
-          this.msgCollection,
-          // where("user._id", "==", this.state.uid),
-          orderBy("createdAt", "desc")
-        ),
-        (snapshot) => {
-          this.onCollectionUpdate(snapshot);
-        }
-      );
-      this.addMessages(systemMsg);
-    } else {
-      console.error("There was an error while retrieving the collection");
-    }
-    */
+    //setting up system message with name of the user when they join the convo
+    const systemMsg = {
+      _id: `sys-${Math.floor(Math.random() * 100000)}`,
+      text: `${name ? name : "Anonymous"} joined the conversation 👋`,
+      createdAt: new Date(),
+      system: true,
+    };
+    this.refMessages.add(systemMsg);
   }
 
   /**
@@ -127,7 +112,7 @@ class Chat extends Component {
    */
   componentWillUnmount() {
     this.authUnsubscribe();
-    this.unsubscribeChatUser();
+    this.unsubscribe();
   }
 
   /**
@@ -140,7 +125,7 @@ class Chat extends Component {
       let data = { ...doc.data() };
 
       messages.push({
-        _id: doc.id,
+        _id: data._id,
         createdAt: data.createdAt.toDate(),
         text: data.text || "",
         system: data.system,
@@ -155,9 +140,15 @@ class Chat extends Component {
    * Adds a new message to the Firebase DB
    * @param {} msg
    */
-  addMessages = async (msg) => {
-    const docRef = doc(db, "messages", msg._id);
-    await setDoc(docRef, msg);
+  addMessage = () => {
+    const msg = this.state.messages[0];
+    this.refMessages.add({
+      uid: this.state.uid,
+      _id: msg._id,
+      text: msg.text,
+      createdAt: msg.createdAt,
+      user: this.state.user,
+    });
   };
 
   /**
@@ -165,11 +156,15 @@ class Chat extends Component {
    * @param {*} messages the sent message
    */
   onSend(messages = []) {
-    this.setState((previousState) => ({
-      messages: GiftedChat.append(previousState.messages, messages),
-      uid: this.state.uid,
-    }));
-    this.addMessages(this.state.messages[0]);
+    this.setState(
+      (previousState) => ({
+        messages: GiftedChat.append(previousState.messages, messages),
+        //uid: this.state.uid,
+      }),
+      () => {
+        this.addMessage();
+      }
+    );
   }
 
   /**
@@ -226,7 +221,6 @@ class Chat extends Component {
           resizeMode="cover"
           style={styles.bgImage}
         >
-          <Text style={styles.loadingMsg}>{this.state.loadingMsg}</Text>
           <GiftedChat
             renderBubble={this.renderBubble.bind(this)}
             renderSystemMessage={this.renderSystemMessage}
@@ -234,8 +228,9 @@ class Chat extends Component {
             messages={this.state.messages}
             onSend={(messages) => this.onSend(messages)}
             user={{
-              _id: 1,
-              avatar: "",
+              name: this.state.name,
+              _id: this.state.user._id,
+              avatar: this.state.user.avatar,
             }}
           />
           {Platform.OS === "android" ? (
