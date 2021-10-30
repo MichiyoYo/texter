@@ -4,7 +4,7 @@ import {
   StyleSheet,
   Text,
   View,
-  Button,
+  LogBox,
   Image,
   Pressable,
 } from "react-native";
@@ -39,6 +39,10 @@ class Start extends Component {
   setBgImage = (img) => {
     this.setState({ bgImage: img });
   };
+
+  componentDidMount() {
+    LogBox.ignoreAllLogs();
+  }
 
   render() {
     return (
