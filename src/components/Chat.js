@@ -6,7 +6,6 @@ import {
   View,
   Platform,
   KeyboardAvoidingView,
-  LogBox,
 } from "react-native";
 import {
   Bubble,
@@ -56,14 +55,6 @@ class Chat extends Component {
     //register for updates
     this.refMessages = firebase.firestore().collection("messages");
     this.refMsgsUser = null;
-
-    LogBox.ignoreLogs([
-      "Setting a timer",
-      "Warning: ...",
-      "Warning: Async Storage has been extracted from react-native core",
-      "undefined",
-      "Animated.event now requires a second argument for options",
-    ]);
   }
 
   /**
