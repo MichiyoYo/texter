@@ -120,8 +120,17 @@ class Chat extends Component {
    * when component unmounts
    */
   componentWillUnmount() {
+    const { name } = this.props.route.params;
     this.authUnsubscribe();
     this.unsubscribe();
+
+    const systemMsg = {
+      _id: `sys-${Math.floor(Math.random() * 100000)}`,
+      text: `${name ? name : "Anonymous"} left the conversation 👋`,
+      createdAt: new Date(),
+      system: true,
+    };
+    this.refMessages.add(systemMsg);
   }
 
   /**
