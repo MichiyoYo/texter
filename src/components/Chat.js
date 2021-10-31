@@ -116,7 +116,7 @@ class Chat extends Component {
       createdAt: new Date(),
       system: true,
     };
-    //this.refMessages.add(systemMsg);
+    this.refMessages.add(systemMsg);
   }
 
   /**
@@ -135,7 +135,7 @@ class Chat extends Component {
       createdAt: new Date(),
       system: true,
     };
-    //this.refMessages.add(systemMsg);
+    this.refMessages.add(systemMsg);
   }
 
   /**
@@ -308,7 +308,7 @@ class Chat extends Component {
       return (
         <MapView
           showsUserLocation={true}
-          style={{ width: 300, height: 200, borderRadius: 13, margin: 3 }}
+          style={{ width: 250, height: 200, borderRadius: 13, margin: 3 }}
           region={{
             latitude: parseInt(currentMessage.location.latitude),
             longitude: parseInt(currentMessage.location.longitude),
