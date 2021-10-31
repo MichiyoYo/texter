@@ -4,4 +4,4 @@ Texter is a chat app for mobile devices, developed using React Native. The app w
 
 ## Screenshots
 
-<img  src="https://github.com/MichiyoYo/texter/blob/main/demo/texter-screenshot.jpg" alt="A screenshot of the app's screens">
+<img width="454" height="434" src="https://github.com/MichiyoYo/texter/blob/main/demo/texter-screenshot.jpg" alt="A screenshot of the app's screens">
