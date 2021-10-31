@@ -16,12 +16,12 @@ import {
 } from "react-native-gifted-chat";
 import MapView from "react-native-maps";
 import CustomActions from "./CustomActions";
-
 import firebase from "firebase";
 import "firebase/firestore";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import NetInfo from "@react-native-community/netinfo";
 
+//configuration object for firebase
 const firebaseConfig = {
   apiKey: "AIzaSyCWJ_wv-RsHaqXbmHuxCxSuCtX2FapWV40",
   authDomain: "texter-d3961.firebaseapp.com",
@@ -62,8 +62,7 @@ class Chat extends Component {
   }
 
   /**
-   * Lifecycle method to make sure that the component mounted
-   * before the options of the current screen are set
+   * Lifecycle method that runs when the component is mounted
    */
   componentDidMount() {
     //get user name from start screen
@@ -71,6 +70,7 @@ class Chat extends Component {
     //setting up the screen title
     this.props.navigation.setOptions({ title: name ? name : "Anonymous" });
 
+    //check if device is online
     NetInfo.fetch().then((connection) => {
       if (connection.isConnected) {
         this.setState({ isConnected: true });
@@ -80,6 +80,7 @@ class Chat extends Component {
           .orderBy("createdAt", "desc")
           .onSnapshot(this.onCollectionUpdate);
 
+        //authentication
         this.authUnsubscribe = firebase.auth().onAuthStateChanged((user) => {
           if (!user) {
             firebase.auth().signInAnonymously();
@@ -105,6 +106,7 @@ class Chat extends Component {
         this.saveMessages();
       } else {
         this.setState({ isConnected: false });
+        //obtaining messages from asyncStorage
         this.getMessages();
       }
     });
@@ -120,11 +122,12 @@ class Chat extends Component {
   }
 
   /**
-   * Lifecycle method used to unsubsribe from updates and authentications
-   * when component unmounts
+   * Lifecycle method that runs when component unmounts
    */
   componentWillUnmount() {
     const { name } = this.props.route.params;
+
+    //unsubscribe from firestore updates
     this.authUnsubscribe();
     this.unsubscribe();
 
@@ -141,6 +144,7 @@ class Chat extends Component {
   /**
    * Updates the state when a new message with the snapshot
    * @param {*} snapshot
+   * @function onCollectionUpdate
    */
   onCollectionUpdate = (snapshot) => {
     const messages = [];
@@ -163,6 +167,8 @@ class Chat extends Component {
 
   /**
    * Retrieves messages from AsyncStorage
+   * @function getMessages
+   * @async
    */
   getMessages = async () => {
     let msg = "";
@@ -178,6 +184,8 @@ class Chat extends Component {
 
   /**
    * Saves messages to AsyncStorage
+   * @function saveMessages
+   * @async
    */
   saveMessages = async () => {
     try {
@@ -192,6 +200,8 @@ class Chat extends Component {
 
   /**
    * Deletes messages from AsyncStorage
+   * @function deleteMessages
+   * @async
    */
   deleteMessages = async () => {
     try {
@@ -206,6 +216,7 @@ class Chat extends Component {
 
   /**
    * Uploads a new message to the Firebase DB
+   * @function uploadMessage
    */
   uploadMessage = () => {
     const msg = this.state.messages[0];
@@ -223,6 +234,7 @@ class Chat extends Component {
   /**
    * Updates the state by appending the last sent message to the rest
    * @param {*} messages the sent message
+   * @function onSend
    */
   onSend(messages = []) {
     this.setState(
@@ -238,6 +250,7 @@ class Chat extends Component {
 
   /**
    * Renderes a customized chat bubble
+   * @function renderBubble
    * @param {*} props
    * @returns a JSX element that rapresents a text bubble with custon bg color
    */
@@ -259,6 +272,7 @@ class Chat extends Component {
 
   /**
    * Renders a customized system message
+   * @function renderSystemMessage
    * @param {*} props
    * @returns a JSX element that represents a customized System Message
    */
@@ -268,6 +282,7 @@ class Chat extends Component {
 
   /**
    * Renders a customized date
+   * @function renderDay
    * @param {*} props
    * @returns a JSX element that represents a customized date
    */
@@ -277,6 +292,7 @@ class Chat extends Component {
 
   /**
    * Renders the input toolbar if the device is online
+   * @function renderInputToolbar
    * @param {*} props
    * @returns a JSX element that represents the input toolbar
    */
@@ -289,6 +305,7 @@ class Chat extends Component {
   /**
    * Renders the + button in the input field that opens up a menu of choices
    * to send images or the location of the user
+   * @function renderCustomActions
    * @param {*} props
    * @returns a JSX element that represents the + button
    */
@@ -298,12 +315,12 @@ class Chat extends Component {
 
   /**
    * Renders a custom view based on the type of the message that was sent
+   * @function renderCustomActions
    * @param {*} props
    * @returns
    */
   renderCustomView(props) {
     const { currentMessage } = props;
-    console.log(currentMessage);
     if (currentMessage.location) {
       return (
         <MapView

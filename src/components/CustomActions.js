@@ -126,6 +126,7 @@ class CustomActions extends Component {
   /**
    * Hanlder of the press event on the different options
    * presented to the user when they try to send a media
+   * @function onActionPress
    */
   onActionPress = () => {
     const options = [
@@ -176,6 +177,7 @@ class CustomActions extends Component {
 
 export default CustomActions;
 
+//Styles for CustomAction component
 const styles = StyleSheet.create({
   container: {
     width: 26,

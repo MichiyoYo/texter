@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import { TextInput, TouchableOpacity } from "react-native-gesture-handler";
 
-//importing images
+//importing background images and logos
 import bgImage from "../assets/images/pure-bg.png";
 import logo from "../assets/images/logo-text.png";
 import Icon from "react-native-vector-icons/FontAwesome";
@@ -40,6 +40,9 @@ class Start extends Component {
     this.setState({ bgImage: img });
   };
 
+  /**
+   * lifecycle method that runs when component mounts
+   */
   componentDidMount() {
     LogBox.ignoreAllLogs();
   }
