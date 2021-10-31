@@ -8,10 +8,10 @@ Texter is a chat app for mobile devices, developed using React Native. The app w
 
 ## Tech Stack
 
-- React Native
-- Expo
-- Firebase Firestore
-- Gifted Chat
+- [React Native](https://reactnative.dev/)
+- [Expo](https://expo.dev/)
+- [Firebase Firestore](https://firebase.google.com/)
+- [Gifted Chat](https://github.com/FaridSafi/react-native-gifted-chat)
 
 ## Features
 
