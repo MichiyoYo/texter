@@ -20,7 +20,7 @@ class CustomActions extends Component {
     try {
       if (permissionResult.granted) {
         const pickerResult = await ImagePicker.launchImageLibraryAsync({
-          mediaTypes: "Images",
+          mediaTypes: ImagePicker.MediaTypeOptions.Images, // only images are allowed
         }).catch((err) => console.log(err));
         if (!pickerResult.cancelled) {
           const imageUrl = await this.uploadImageFetch(pickerResult.uri);
@@ -67,14 +67,15 @@ class CustomActions extends Component {
    */
   getLocation = async () => {
     try {
-      const { status } = await Location.requestForegroundPermissionsAsync();
-      if (status === "granted") {
-        const result = await Location.getCurrentPositionAsync().catch((err) =>
-          console.error(err)
+      const locationPermission =
+        await Location.requestForegroundPermissionsAsync();
+      if (locationPermission.granted) {
+        const locationResult = await Location.getCurrentPositionAsync().catch(
+          (err) => console.error(err)
         );
-        const longitude = JSON.stringify(result.coords.longitude);
-        const latitude = JSON.stringify(result.coords.latitude);
-        if (result) {
+        const longitude = JSON.stringify(locationResult.coords.longitude);
+        const latitude = JSON.stringify(locationResult.coords.latitude);
+        if (locationResult) {
           this.props.onSend({
             location: {
               longitude: longitude,
@@ -89,10 +90,11 @@ class CustomActions extends Component {
   };
 
   /**
-   * Uploads images to firebase
+   * Uploads images to firebase and fetches its url
    * @param {*} uri the uri of the image to upload
    * @function uploadImageFetch
    * @async
+   * @returns the url of the uploaded image
    */
   uploadImageFetch = async (uri) => {
     const blob = await new Promise((resolve, reject) => {

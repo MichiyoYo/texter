@@ -153,8 +153,8 @@ class Chat extends Component {
         text: data.text || "",
         system: data.system,
         user: data.user,
-        image: data.image || null,
-        location: data.location || null,
+        image: data.image,
+        location: data.location,
       });
     });
 
@@ -215,8 +215,8 @@ class Chat extends Component {
       text: msg.text || "",
       createdAt: msg.createdAt,
       user: this.state.user,
-      image: this.state.image || null,
-      location: this.state.location || null,
+      image: msg.image || "",
+      location: msg.location || null,
     });
   };
 
@@ -307,7 +307,7 @@ class Chat extends Component {
     if (currentMessage.location) {
       return (
         <MapView
-          style={{ width: 150, height: 100, borderRadius: 13, margin: 3 }}
+          style={{ width: 300, height: 200, borderRadius: 13, margin: 3 }}
           region={{
             latitude: currentMessage.location.latitude,
             longitude: currentMessage.location.longitude,
