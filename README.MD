@@ -39,7 +39,7 @@ The images are stored on Firebase Storage.
 ### 1. Install dependencies
 
 - With your terminal, navigate to the root folder of the project
-- In your terminal, run `npm install`
+- In your terminal, run `yarn install`
 
 ### 2. Run the app
 
