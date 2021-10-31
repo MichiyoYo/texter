@@ -5,6 +5,8 @@ import * as ImagePicker from "expo-image-picker";
 import { Camera } from "expo-camera";
 import * as Location from "expo-location";
 import PropTypes from "prop-types";
+import firebase from "firebase";
+import "firebase/firestore";
 
 class CustomActions extends Component {
   /**
@@ -38,7 +40,7 @@ class CustomActions extends Component {
   takePhoto = async () => {
     let permissionCameraResult = await Camera.requestCameraPermissionsAsync();
     let permissionCameraRollResult =
-      await Camera.requestMediaLibraryPermissionsAsync();
+      await ImagePicker.requestMediaLibraryPermissionsAsync();
     try {
       if (
         permissionCameraResult.granted &&
@@ -49,7 +51,7 @@ class CustomActions extends Component {
         }).catch((err) => console.error(err));
 
         if (!cameraResult.cancelled) {
-          const imageUrl = await this.uploadImageFetch(result.uri);
+          const imageUrl = await this.uploadImageFetch(cameraResult.uri);
           this.props.onSend({ image: imageUrl });
         }
       }
@@ -66,7 +68,7 @@ class CustomActions extends Component {
   getLocation = async () => {
     try {
       const { status } = await Location.requestForegroundPermissionsAsync();
-      if (status === granted) {
+      if (status === "granted") {
         const result = await Location.getCurrentPositionAsync().catch((err) =>
           console.error(err)
         );
@@ -143,9 +145,10 @@ class CustomActions extends Component {
             return this.pickImage();
           case 1:
             console.log("user wants to take a photo");
-            return;
+            return this.takePhoto();
           case 2:
             console.log("user wants to get their location");
+            return this.getLocation();
           default:
         }
       }

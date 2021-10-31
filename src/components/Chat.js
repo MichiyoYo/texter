@@ -48,7 +48,7 @@ class Chat extends Component {
       },
       isConnected: false,
       location: null,
-      image: "",
+      image: null,
     };
 
     //initializing firebase
@@ -116,7 +116,7 @@ class Chat extends Component {
       createdAt: new Date(),
       system: true,
     };
-    this.refMessages.add(systemMsg);
+    //this.refMessages.add(systemMsg);
   }
 
   /**
@@ -135,7 +135,7 @@ class Chat extends Component {
       createdAt: new Date(),
       system: true,
     };
-    this.refMessages.add(systemMsg);
+    //this.refMessages.add(systemMsg);
   }
 
   /**
@@ -153,8 +153,8 @@ class Chat extends Component {
         text: data.text || "",
         system: data.system,
         user: data.user,
-        image: data.image,
-        location: data.location,
+        image: data.image || null,
+        location: data.location || null,
       });
     });
 
@@ -212,11 +212,11 @@ class Chat extends Component {
     this.refMessages.add({
       uid: this.state.uid,
       _id: msg._id,
-      text: msg.text,
+      text: msg.text || "",
       createdAt: msg.createdAt,
       user: this.state.user,
-      image: this.state.image,
-      location: this.state.location,
+      image: this.state.image || null,
+      location: this.state.location || null,
     });
   };
 
@@ -304,7 +304,6 @@ class Chat extends Component {
   renderCustomView(props) {
     const { currentMessage } = props;
 
-    //if location property is present
     if (currentMessage.location) {
       return (
         <MapView
@@ -315,16 +314,6 @@ class Chat extends Component {
             latitudeDelta: 0.0922,
             longitudeDelta: 0.0421,
           }}
-        />
-      );
-    }
-
-    //if image property is present
-    if (currentMessage.image) {
-      return (
-        <Image
-          style={{ width: 150, height: 100, borderRadius: 13, margin: 3 }}
-          source={{ uri: currentMessage.image.uri }}
         />
       );
     }
