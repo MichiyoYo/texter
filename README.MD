@@ -1,10 +1,15 @@
 # Overview
 
 Texter is a chat app for mobile devices, developed using React Native. The app will provide users with a chat interface and options to share images and their location.
-
+[Watch demo video](https://youtu.be/v2cBHqAgDdA)
 <img width="454" height="434" src="https://github.com/MichiyoYo/texter/blob/main/demo/texter-screenshot.jpg" alt="A screenshot of the app's screens">
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/v2cBHqAgDdA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+## Tech Stack
+
+- React Native
+- Expo
+- Firebase Firestore
+- Gifted Chat
 
 ## Features
 
@@ -13,13 +18,6 @@ Texter is a chat app for mobile devices, developed using React Native. The app w
 - The user will access a common chat room where the people can exchange text, images and their location
 - If the device is offline, the user would be able to read the latest messages saved on the device, but they won't be able to send new messages
 - When the device is back online, you will see the messages that were sent while offline
-
-## Tech Stack
-
-- React Native
-- Expo
-- Firebase Firestore
-- Gifted Chat
 
 ## Installation
 
