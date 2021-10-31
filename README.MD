@@ -21,6 +21,14 @@ Texter is a chat app for mobile devices, developed using React Native. The app w
 - If the device is offline, the user would be able to read the latest messages saved on the device, but they won't be able to send new messages
 - When the device is back online, you will see the messages that were sent while offline
 
+## Permissions
+
+When the user decides to send a picture or share their location, the app will ask permission to access the camera roll and/or the user's location.
+Granting the access to the app is necessary for the app to work correctly.
+No data gets used or sent without the user's permission.
+The data is stored locally on the user's device, and synched with the Firestore database when the device goes online.
+The images are stored on Firebase Storage.
+
 ## Installation
 
 ### 0. Prerequisites
@@ -43,11 +51,3 @@ Texter is a chat app for mobile devices, developed using React Native. The app w
 - Download the Expo app on the device you want to use to run the app
 - With your device, scan QR code (Android) or send a link via email (iOS) to connect to expo
 - The app will start on your device and you'll be able to use it
-
-## Permissions
-
-When the user decides to send a picture or share their location, the app will ask permission to access the camera roll and/or the user's location.
-Granting the access to the app is necessary for the app to work correctly.
-No data gets used or sent without the user's permission.
-The data is stored locally on the user's device, and synched with the Firestore database when the device goes online.
-The images are stored on Firebase Storage.
