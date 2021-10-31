@@ -1,7 +1,9 @@
 # Overview
 
 Texter is a chat app for mobile devices, developed using React Native. The app will provide users with a chat interface and options to share images and their location.
+
 [Watch demo video](https://youtu.be/v2cBHqAgDdA)
+
 <img width="454" height="434" src="https://github.com/MichiyoYo/texter/blob/main/demo/texter-screenshot.jpg" alt="A screenshot of the app's screens">
 
 ## Tech Stack
@@ -40,4 +42,12 @@ Texter is a chat app for mobile devices, developed using React Native. The app w
 
 - Download the Expo app on the device you want to use to run the app
 - With your device, scan QR code (Android) or send a link via email (iOS) to connect to expo
-- The app will start on your device and you'll be able to test it
+- The app will start on your device and you'll be able to use it
+
+## Permissions
+
+When the user decides to send a picture or share their location, the app will ask permission to access the camera roll and/or the user's location.
+Granting the access to the app is necessary for the app to work correctly.
+No data gets used or sent without the user's permission.
+The data is stored locally on the user's device, and synched with the Firestore database when the device goes online.
+The images are stored on Firebase Storage.
