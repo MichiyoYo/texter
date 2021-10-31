@@ -303,14 +303,15 @@ class Chat extends Component {
    */
   renderCustomView(props) {
     const { currentMessage } = props;
-
+    console.log(currentMessage);
     if (currentMessage.location) {
       return (
         <MapView
+          showsUserLocation={true}
           style={{ width: 300, height: 200, borderRadius: 13, margin: 3 }}
           region={{
-            latitude: currentMessage.location.latitude,
-            longitude: currentMessage.location.longitude,
+            latitude: parseInt(currentMessage.location.latitude),
+            longitude: parseInt(currentMessage.location.longitude),
             latitudeDelta: 0.0922,
             longitudeDelta: 0.0421,
           }}
