@@ -2,9 +2,9 @@
 
 Texter is a chat app for mobile devices, developed using React Native. The app will provide users with a chat interface and options to share images and their location.
 
-## Screenshots
-
 <img width="454" height="434" src="https://github.com/MichiyoYo/texter/blob/main/demo/texter-screenshot.jpg" alt="A screenshot of the app's screens">
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/v2cBHqAgDdA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ## Features
 
@@ -23,22 +23,22 @@ Texter is a chat app for mobile devices, developed using React Native. The app w
 
 ## Installation
 
-### 0.Prerequisites
+### 0. Prerequisites
 
 - Node.js ([installation steps](https://nodejs.org/en/download/))
 - Expo `npm install expo-cli --global`
 
-### 1.Install dependencies
+### 1. Install dependencies
 
 - With your terminal, navigate to the root folder of the project
 - In your terminal, run `npm install`
 
-### 2.Run the app
+### 2. Run the app
 
 - To launch the app run `expo start`
 - Expo will start and a browser window will open, that gives you different options to execute the app on a device or emulator
 
-### 3.Set up a device
+### 3. Set up a device
 
 - Download the Expo app on the device you want to use to run the app
 - With your device, scan QR code (Android) or send a link via email (iOS) to connect to expo
