@@ -47,6 +47,8 @@ class Chat extends Component {
         avatar: "",
       },
       isConnected: false,
+      location: null,
+      image: "",
     };
 
     //initializing firebase
@@ -107,7 +109,7 @@ class Chat extends Component {
       }
     });
 
-    //setting up system message with name of the user when they join the convo
+    //setting up system message with name of the user when they join the conversation
     const systemMsg = {
       _id: `sys-${Math.floor(Math.random() * 100000)}`,
       text: `${name ? name : "Anonymous"} joined the conversation 👋`,
@@ -126,6 +128,7 @@ class Chat extends Component {
     this.authUnsubscribe();
     this.unsubscribe();
 
+    //setting up system message with name of the user when they leave the conversation
     const systemMsg = {
       _id: `sys-${Math.floor(Math.random() * 100000)}`,
       text: `${name ? name : "Anonymous"} left the conversation 👋`,
@@ -150,6 +153,8 @@ class Chat extends Component {
         text: data.text || "",
         system: data.system,
         user: data.user,
+        image: data.image,
+        location: data.location,
       });
     });
 
@@ -185,6 +190,9 @@ class Chat extends Component {
     }
   };
 
+  /**
+   * Deletes messages from AsyncStorage
+   */
   deleteMessages = async () => {
     try {
       await AsyncStorage.removeItem("messages");
@@ -207,6 +215,8 @@ class Chat extends Component {
       text: msg.text,
       createdAt: msg.createdAt,
       user: this.state.user,
+      image: this.state.image,
+      location: this.state.location,
     });
   };
 
@@ -276,12 +286,25 @@ class Chat extends Component {
     }
   }
 
+  /**
+   * Renders the + button in the input field that opens up a menu of choices
+   * to send images or the location of the user
+   * @param {*} props
+   * @returns a JSX element that represents the + button
+   */
   renderCustomActions(props) {
     return <CustomActions {...props} />;
   }
 
+  /**
+   * Renders a custom view based on the type of the message that was sent
+   * @param {*} props
+   * @returns
+   */
   renderCustomView(props) {
     const { currentMessage } = props;
+
+    //if location property is present
     if (currentMessage.location) {
       return (
         <MapView
@@ -292,6 +315,16 @@ class Chat extends Component {
             latitudeDelta: 0.0922,
             longitudeDelta: 0.0421,
           }}
+        />
+      );
+    }
+
+    //if image property is present
+    if (currentMessage.image) {
+      return (
+        <Image
+          style={{ width: 150, height: 100, borderRadius: 13, margin: 3 }}
+          source={{ uri: currentMessage.image.uri }}
         />
       );
     }
