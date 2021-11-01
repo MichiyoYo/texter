@@ -34,7 +34,7 @@ The images are stored on Firebase Storage.
 ### 0. Prerequisites
 
 - Node.js ([installation steps](https://nodejs.org/en/download/))
-- Yarn ([installation steps](https://classic.yarnpkg.com/lang/en/docs/install/))
+- Yarn `npm install --global yarn`
 - Expo `npm install expo-cli --global`
 
 ### 1. Install dependencies
